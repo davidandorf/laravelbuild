@@ -61,8 +61,8 @@ ENV PATH ${PATH}:/opt/ant/bin
 
 ENV NODE_VERSION stable
 
-RUN curl -sL https://deb.nodesource.com/setup | bash - && \
-    apt-get install nodejs build-essentials -y
+RUN curl -sL https://deb.nodesource.com/setup_7.x | -E bash - && \
+    apt-get install nodejs -y
 
 
 

@@ -49,7 +49,7 @@ ENV JAVA_HOME /usr/lib/jvm/java-7-openjdk-amd64
 
 # Installs Ant
 ENV ANT_VERSION 1.9.4
-RUN  apt-get install -y wget curl && cd ~ && \
+RUN  apt-get install -y wget curl git && cd ~ && \
     wget -q http://archive.apache.org/dist/ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz && \
     tar -xzf apache-ant-${ANT_VERSION}-bin.tar.gz && \
     mv apache-ant-${ANT_VERSION} /opt/ant && \

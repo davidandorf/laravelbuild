@@ -66,8 +66,8 @@ RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.6/install.sh
         . $NVM_DIR/nvm.sh && \
         nvm install ${NODE_VERSION} && \
         nvm use ${NODE_VERSION} && \
-        nvm alias ${NODE_VERSION} && \
-        npm install -g gulp gulp-cli bower vue-cli \
+        nvm alias ${NODE_VERSION}
+
 
 RUN echo "" >> ~/.bashrc && \
         echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc && \
@@ -78,7 +78,11 @@ RUN echo "" >> ~/.bashrc && \
     echo 'export NVM_DIR="/home/laradock/.nvm"' >> ~/.bashrc && \
     echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm' >> ~/.bashrc
 
+
+
 USER laradock
+RUN npm install -g gulp gulp-cli bower vue-cli
+
 
 # Install composer and add its bin to the PATH.
 RUN curl -s http://getcomposer.org/installer | php && \

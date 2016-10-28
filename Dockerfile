@@ -61,17 +61,10 @@ USER laradock
 
 ENV NODE_VERSION stable
 
-RUN export NVM_DIR="$HOME/.nvm" && curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.6/install.sh | bash && \
-   . $NVM_DIR/nvm.sh 
+RUN curl -sL https://deb.nodesource.com/setup | sudo bash - && \
+    apt-get install nodejs build-essentials -y
 
-RUN echo "" >> ~/.bashrc && \
-        echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc && \
-        echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm' >> ~/.bashrc
 
-RUN nvm install ${NODE_VERSION} && \
-    nvm use ${NODE_VERSION} && \
-    nvm alias ${NODE_VERSION} && \
-    npm install -g gulp gulp-cli bower vue-cli
 
 
 # Install composer and add its bin to the PATH.

@@ -39,7 +39,7 @@ RUN apt-get -y install php7.0 php7.0-gd php7.0-ldap \
     php7.0-mcrypt php7.0-xmlrpc php7.0-cli php7.0-curl \
     php7.0-json php7.0-odbc php7.0-tidy php7.0-imap \
     php7.0-redis php7.0-intl php7.0-pgsql php7.0-mongodb \
-    php7.0-sybase php7.0-zip sendmail supervisor \
+    php7.0-sybase php7.0-zip php7.0-mbstring  sendmail supervisor \
     openjdk-7-jre\
     && mkdir /run/php
 
@@ -61,27 +61,28 @@ ENV PATH ${PATH}:/opt/ant/bin
 
 ENV NODE_VERSION stable
 
-RUN curl -sL https://deb.nodesource.com/setup_7.x | -E bash - && \
+RUN curl -sL https://deb.nodesource.com/setup_7.x | bash - && \
     apt-get install nodejs -y
 
 
 
-USER laradock
+
 # Install composer and add its bin to the PATH.
 RUN curl -s http://getcomposer.org/installer | php && \
-    mv composer.phar /usr/local/bin/composer
+    mv composer.phar /usr/bin/composer
 
+
+USER laradock
 #Installing php build packages
 
 RUN composer global require phpunit/phpunit && \
     composer global require phpunit/dbunit && \
     composer global require phing/phing && \
-    composer global require phpdocumentor/phpdocumentor && \
-    composer global require sebastian/phpcpd && \
-    oomposer global require phploc/phploc && \
+    composer global require "sebastian/phpcpd=*" && \
+    composer global require phploc/phploc && \
     composer global require phpmd/phpmd && \
     composer global require squizlabs/php_codesniffer && \
-    composer globalrequire "codeception/codeception:*" \
+    composer global require "codeception/codeception:*" && \
     echo "export PATH=${PATH}:~/.composer/vendor/bin" >> ~/.bashrc
 
 

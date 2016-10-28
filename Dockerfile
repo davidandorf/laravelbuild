@@ -61,11 +61,8 @@ USER laradock
 
 ENV NODE_VERSION stable
 
-RUN export NVM_DIR="$HOME/.nvm" && ( \
-      git clone https://github.com/creationix/nvm.git "$NVM_DIR" \
-      cd "$NVM_DIR" \
-      git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" origin` \
-    ) && . "$NVM_DIR/nvm.sh"
+RUN export NVM_DIR="$HOME/.nvm" && curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.6/install.sh | bash && \
+   . $NVM_DIR/nvm.sh 
 
 RUN echo "" >> ~/.bashrc && \
         echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc && \

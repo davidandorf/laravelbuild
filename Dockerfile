@@ -61,10 +61,10 @@ USER laradock
 
 ENV NODE_VERSION stable
 
-RUN export NVM_DIR="$HOME/.nvm" && (
-      git clone https://github.com/creationix/nvm.git "$NVM_DIR"
-      cd "$NVM_DIR"
-      git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" origin`
+RUN export NVM_DIR="$HOME/.nvm" && ( \
+      git clone https://github.com/creationix/nvm.git "$NVM_DIR" \
+      cd "$NVM_DIR" \
+      git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" origin` \
     ) && . "$NVM_DIR/nvm.sh"
 
 RUN echo "" >> ~/.bashrc && \

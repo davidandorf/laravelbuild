@@ -57,16 +57,16 @@ RUN  apt-get install -y wget curl git && cd ~ && \
 ENV ANT_HOME /opt/ant
 ENV PATH ${PATH}:/opt/ant/bin
 
-USER laradock
+
 
 ENV NODE_VERSION stable
 
-RUN curl -sL https://deb.nodesource.com/setup | sudo bash - && \
+RUN curl -sL https://deb.nodesource.com/setup | bash - && \
     apt-get install nodejs build-essentials -y
 
 
 
-
+USER laradock
 # Install composer and add its bin to the PATH.
 RUN curl -s http://getcomposer.org/installer | php && \
     mv composer.phar /usr/local/bin/composer

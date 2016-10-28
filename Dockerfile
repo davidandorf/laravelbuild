@@ -89,5 +89,5 @@ RUN composer global require phpunit/phpunit && \
 RUN . ~/.bashrc
 
 WORKDIR /var/www/laravel
-
+COPY entrypoint.sh /
 ENTRYPOINT ["entrypoint.sh"]

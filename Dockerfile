@@ -91,6 +91,4 @@ RUN . ~/.bashrc
 
 WORKDIR /var/www/laravel
 
-RUN touch ./storage/database.sqlite
-RUN chown -R laradock:laradock . && composer install && composer dump-autoload && php artisan migrate -f && bower install && bower update
-RUN ant full-build
+ENTRYPOINT ["entrypoint.sh"]

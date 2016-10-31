@@ -77,7 +77,7 @@ RUN curl -s http://getcomposer.org/installer | php && \
     mv composer.phar /usr/bin/composer
 
 
-USER laradock
+
 #Installing php build packages
 
 RUN composer global require phpunit/phpunit && \
@@ -88,11 +88,12 @@ RUN composer global require phpunit/phpunit && \
     composer global require phpmd/phpmd && \
     composer global require squizlabs/php_codesniffer && \
     composer global require "codeception/codeception:*" && \
-    echo "export PATH=${PATH}:~/.composer/vendor/bin" >> ~/.bashrc
+    echo "export PATH=${PATH}:/root/.composer/vendor/bin" >> ~/.bashrc
 
 
 RUN . ~/.bashrc
 
+USER laradock
 WORKDIR /var/www/laravel
 
 

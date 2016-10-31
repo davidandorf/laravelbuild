@@ -25,7 +25,12 @@ ENV LANGUAGE en_US.UTF-8
 ARG PUID=1000
 ARG PGID=1000
 RUN groupadd -g $PGID laradock && \
-    useradd -u $PUID -g laradock -m laradock
+    useradd -u $PUID -g laradock -m laradock && \
+    usermod -aG sudo laradock
+
+RUN sed -i.bkp -e \
+      's/%sudo\s\+ALL=(ALL\(:ALL\)\?)\s\+ALL/%sudo ALL=NOPASSWD:ALL/g' \
+      /etc/sudoers
 
 RUN apt-get update
 RUN apt-get install software-properties-common -y 
@@ -90,7 +95,6 @@ RUN . ~/.bashrc
 
 WORKDIR /var/www/laravel
 
-USER root
 
 COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh

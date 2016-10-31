@@ -88,7 +88,7 @@ RUN composer global require phpunit/phpunit && \
     composer global require phpmd/phpmd && \
     composer global require squizlabs/php_codesniffer && \
     composer global require "codeception/codeception:*" && \
-    echo "export PATH=${PATH}:/root/.composer/vendor/bin" >> ~/.bashrc
+    echo 'export PATH="$PATH:$HOME/.composer/vendor/bin"' >> ~/.bashrc
 
 
 RUN . ~/.bashrc

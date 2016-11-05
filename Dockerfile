@@ -77,9 +77,13 @@ RUN curl -s http://getcomposer.org/installer | php && \
     mv composer.phar /usr/bin/composer
 
 
+COPY entrypoint.sh /
+RUN chmod +x /entrypoint.sh
+
+
+USER laradock
 
 #Installing php build packages
-
 RUN composer global require phpunit/phpunit && \
     composer global require phpunit/dbunit && \
     composer global require phing/phing && \
@@ -93,13 +97,7 @@ RUN composer global require phpunit/phpunit && \
 
 RUN . ~/.bashrc
 
-USER laradock
+
 WORKDIR /var/www/laravel
-
-
-COPY entrypoint.sh /
-RUN chmod +x /entrypoint.sh
-
-
 
 ENTRYPOINT ["/entrypoint.sh"]

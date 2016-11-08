@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM ubuntu:latest
 
 MAINTAINER Hammad Ahmed <hammad@brokergenius.com>
 
@@ -17,25 +17,22 @@ RUN apt-get update
 #
 #
 #
-RUN apt-get install -y language-pack-en-base
+RUN apt-get install -y language-pack-en-base sudo
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
-
 
 ARG PUID=1000
 ARG PGID=1000
 RUN groupadd -g $PGID laradock && \
     useradd -u $PUID -g laradock -m laradock && \
     usermod -aG sudo laradock
-
 RUN sed -i.bkp -e \
-      's/%sudo\s\+ALL=(ALL\(:ALL\)\?)\s\+ALL/%sudo ALL=NOPASSWD:ALL/g' \
-      /etc/sudoers
-
+    's/%sudo\s\+ALL=(ALL\(:ALL\)\?)\s\+ALL/%sudo ALL=NOPASSWD:ALL/g' \
+    /etc/sudoers
 RUN apt-get update
 RUN apt-get install software-properties-common -y 
 RUN add-apt-repository -y ppa:ondrej/php
-RUN add-apt-repository ppa:webupd8team/java -y
+RUN add-apt-repository ppa:openjdk-r/ppa -y
 RUN apt-get update
 
 
@@ -47,7 +44,7 @@ RUN apt-get -y install php7.0 php7.0-gd php7.0-ldap \
     php7.0-sybase php7.0-zip php7.0-mbstring  sendmail supervisor \
     openjdk-7-jre\
     && mkdir /run/php
-
+ENV PATH vendor/bin:$COMPOSER_HOME/vendor/bin:$PATH
 ENV JAVA_HOME /usr/lib/jvm/java-7-openjdk-amd64
 
 
@@ -98,6 +95,6 @@ RUN composer global require phpunit/phpunit && \
 RUN . ~/.bashrc
 
 
-WORKDIR /var/www/laravel
-
+ENV COMPOSER_HOME /home/laradock/.composer
+ENV PATH vendor/bin:$COMPOSER_HOME/vendor/bin:$PATH
 ENTRYPOINT ["/entrypoint.sh"]

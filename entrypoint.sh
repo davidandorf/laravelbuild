@@ -1,6 +1,7 @@
 #!/bin/bash
-sudo chown -R laradock:laradock .
-
+whoami
+pwd
+sudo chown -R laradock:laradock /var/www/laravel
 sudo touch /var/www/laravel/storage/database.sqlite
-composer install && composer dump-autoload && php artisan migrate -f && bower install && bower update
+cd /var/www/laravel && composer install && composer dump-autoload && php artisan migrate -f && bower install && bower update
 ant full-build

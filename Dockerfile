@@ -36,7 +36,7 @@ RUN add-apt-repository ppa:openjdk-r/ppa -y
 RUN apt-get update
 
 
-RUN apt-get -y install php7.0 php7.0-gd php7.0-ldap \
+RUN apt-get -y install libxml2-utils php7.0 php-xdebug php7.0-gd php7.0-ldap \
     php7.0-sqlite php7.0-pgsql php-pear php7.0-mysql \
     php7.0-mcrypt php7.0-xmlrpc php7.0-cli php7.0-curl \
     php7.0-json php7.0-odbc php7.0-tidy php7.0-imap \
@@ -65,18 +65,13 @@ ENV NODE_VERSION stable
 
 RUN curl -sL https://deb.nodesource.com/setup_7.x | bash - && \
     apt-get install nodejs -y
-
-
+RUN npm install bower -g && \
+   npm install -g "gulpjs/gulp#4.0"
 
 
 # Install composer and add its bin to the PATH.
 RUN curl -s http://getcomposer.org/installer | php && \
     mv composer.phar /usr/bin/composer
-
-
-COPY entrypoint.sh /
-RUN chmod +x /entrypoint.sh
-
 
 USER laradock
 
@@ -88,13 +83,25 @@ RUN composer global require phpunit/phpunit && \
     composer global require phploc/phploc && \
     composer global require phpmd/phpmd && \
     composer global require squizlabs/php_codesniffer && \
-    composer global require "codeception/codeception:*" && \
-    echo 'export PATH="$PATH:$HOME/.composer/vendor/bin"' >> ~/.bashrc
+    composer global require "codeception/codeception:*" && \   
+ echo 'export PATH="$PATH:$HOME/.composer/vendor/bin"' >> ~/.bashrc
 
 
 RUN . ~/.bashrc
 
 
+
 ENV COMPOSER_HOME /home/laradock/.composer
 ENV PATH vendor/bin:$COMPOSER_HOME/vendor/bin:$PATH
-ENTRYPOINT ["/entrypoint.sh"]
+
+WORKDIR /home/laradock
+RUN wget http://apigen.org/apigen.phar && \
+sudo chmod +x apigen.phar && \
+sudo mv apigen.phar /usr/local/bin/apigen 
+
+
+
+COPY entrypoint.sh /
+RUN sudo chmod +x /entrypoint.sh
+
+CMD ["/entrypoint.sh"]

@@ -104,4 +104,7 @@ sudo mv apigen.phar /usr/local/bin/apigen
 COPY entrypoint.sh /
 RUN sudo chmod +x /entrypoint.sh
 
+ENV HOME_DIR /var/www/laravel
+ENV BUILD_USER laradock
+
 CMD ["/entrypoint.sh"]

@@ -41,7 +41,7 @@ RUN apt-get -y install libxml2-utils php7.0 php-xdebug php7.0-gd php7.0-ldap \
     php7.0-mcrypt php7.0-xmlrpc php7.0-cli php7.0-curl \
     php7.0-json php7.0-odbc php7.0-tidy php7.0-imap \
     php7.0-redis php7.0-intl php7.0-pgsql php7.0-mongodb \
-    php7.0-sybase php7.0-zip php7.0-mbstring  sendmail supervisor \
+    php7.0-sybase php7.0-zip php7.0-mbstring php7.0-bcmath sendmail supervisor \
     openjdk-7-jre\
     && mkdir /run/php
 ENV PATH vendor/bin:$COMPOSER_HOME/vendor/bin:$PATH
